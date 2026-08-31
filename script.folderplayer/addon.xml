@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="script.folderplayer" name="Folder Player" version="0.1.1" provider-name="vialactea">
+  <requires>
+    <import addon="xbmc.python" version="3.0.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_GB">Play a folder of mixed audio and video files as one playlist</summary>
+    <description lang="en_GB">Plain folder view without library: titles of the current folder on the left, video on the right (empty for audio). Previous/next, fullscreen, sort by name or modification date.</description>
+    <platform>all</platform>
+    <license>MIT</license>
+    <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
+    <news>0.1.1 - English UI, button layout, fullscreen kept across titles, optional log file
+0.1.0 - first test version</news>
+  </extension>
+</addon>

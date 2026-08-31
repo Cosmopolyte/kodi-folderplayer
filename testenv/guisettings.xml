@@ -1,0 +1,11 @@
+<settings version="2">
+    <setting id="services.webserver">true</setting>
+    <setting id="services.webserverport">8080</setting>
+    <setting id="services.webserverauthentication">false</setting>
+    <setting id="services.esenabled">true</setting>
+    <setting id="services.esallinterfaces">true</setting>
+    <setting id="audiooutput.audiodevice">PULSE:Default</setting>
+    <setting id="lookandfeel.skin">skin.estuary</setting>
+    <setting id="filelists.showextensions">true</setting>
+    <setting id="videoplayer.autoplaynextitem">true</setting>
+</settings>
