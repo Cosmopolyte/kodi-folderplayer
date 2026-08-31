@@ -7,8 +7,11 @@ Plain folder view, no library, no scanning, no thumbnails.
 - Right: the video of the running title (empty/visualisation for audio), time, progress
 - Buttons: Previous · Next · Stop / Fullscreen · Sort (name / modification date)
 - Remote keys: OK = open folder / play title, Back = folder up (in the start folder: exit),
-  long-press OK (context menu) = toggle sort, media keys (skip next/prev) work if the remote has them
+  long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
+  media keys (skip next/prev) work if the remote has them
+- Progress bar is focusable (Up from the buttons): Left/Right = seek ±10 s (hold to repeat), OK = pause/resume
 - Fullscreen is kept across titles (Kodi's own fullscreen video / music window), Back returns to the add-on
+- While playing a folder tree, the list highlights the subfolder that contains the running title
 
 ## Why an add-on
 
@@ -73,7 +76,11 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.0 — play folder incl. subfolders (long-press OK on a folder, depth first, capped at 2000 titles),
+  seekable progress bar (Left/Right ±10 s, OK = pause), list highlights the subfolder of the running title
 - 0.1.1 — English UI, button layout (Prev/Next/Stop + Fullscreen/Sort), fullscreen kept across titles, optional log file
 - 0.1.0 — first version (folder browser, mixed playback, sort by name/date), tested on WZ-TV (Kodi 22 beta 1)
 
-Ideas: play folder incl. subfolders (long-press OK on a folder), seekable progress bar, custom per-folder order.
+Ideas: custom per-folder order (move titles, persisted in addon_data, sort cycle name/date/custom).
+
+Note for developers: never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `\x89PNG\r\n`.

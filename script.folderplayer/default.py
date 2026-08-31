@@ -22,7 +22,10 @@ PATH = ADDON.getAddonInfo('path')
 
 # control ids (see resources/skins/Default/720p/folderplayer.xml)
 C_LIST, C_VIDEO, C_TITLE, C_STATUS = 100, 200, 301, 300
-B_PREV, B_NEXT, B_SORT, B_FULL, B_STOP = 401, 402, 403, 404, 405
+B_PREV, B_NEXT, B_SORT, B_FULL, B_STOP, B_SEEK = 401, 402, 403, 404, 405, 406
+
+SEEK_STEP = 10          # seconds per left/right press on the progress bar
+MAX_RECURSIVE = 2000    # safety cap for "play folder incl. subfolders"
 
 # Kodi window ids
 WIN_FULLSCREEN_VIDEO, WIN_VISUALISATION = 12005, 12006
@@ -119,6 +122,18 @@ def read_folder(folder, sort=SORT_NAME):
     else:
         files.sort(key=lambda e: e.name.lower())
     return dirs, files
+
+
+def collect_recursive(folder, sort=SORT_NAME, limit=MAX_RECURSIVE):
+    """All media files of a folder tree: files of the folder first, then each subfolder (depth first)."""
+    out = []
+    dirs, files = read_folder(folder, sort)
+    out.extend(files)
+    for d in dirs:
+        if len(out) >= limit:
+            break
+        out.extend(collect_recursive(d.path, sort, limit - len(out)))
+    return out[:limit]
 
 
 class Player(xbmc.Player):
@@ -259,6 +274,33 @@ class Window(xbmcgui.WindowXML):
         self.queue_folder = folder
         self.play_index(start_index)
 
+    def play_recursive(self, entry):
+        """Long press on a folder: play it including all subfolders."""
+        xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
+        try:
+            files = collect_recursive(entry.path, self.sort)
+        finally:
+            xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
+        log('recursive %s: %d files' % (entry.path, len(files)))
+        if not files:
+            self.set_status('No media files in %s' % entry.name)
+            return
+        if len(files) >= MAX_RECURSIVE:
+            xbmcgui.Dialog().notification('Folder Player', 'Limited to %d titles' % MAX_RECURSIVE)
+        self.play_folder(entry.path, files, 0)
+
+    def seek(self, delta):
+        try:
+            if not self.player.isPlaying():
+                return
+            t = max(0.0, self.player.getTime() + delta)
+            total = self.player.getTotalTime()
+            if total and t > total - 1:
+                t = total - 1
+            self.player.seekTime(t)
+        except Exception as e:
+            log('seek failed: %s' % e, xbmc.LOGWARNING)
+
     def play_index(self, i, natural=False):
         if not self.queue:
             return
@@ -339,13 +381,19 @@ class Window(xbmcgui.WindowXML):
         except RuntimeError:
             return
         playing = self.queue[self.index] if (self.queue and 0 <= self.index < len(self.queue)) else None
-        same = playing is not None and self.folder == self.queue_folder
         for i in range(lst.size()):
             kind, e = self.entry_at(i)
-            lst.getListItem(i).select(same and kind == 'file' and e is playing)
+            sel = False
+            if playing is not None and e is not None:
+                if kind == 'file':
+                    sel = e.path == playing.path            # the title itself
+                elif kind == 'dir':
+                    sel = playing.path.startswith(e.path)  # subfolder containing the title
+            lst.getListItem(i).select(sel)
         if playing:
             kind = 'Video' if self.player.isPlayingVideo() else 'Audio'
-            self.set_status('%d/%d  %s  [%s]' % (self.index + 1, len(self.queue), playing.name, kind))
+            rel = playing.path[len(self.queue_folder):] if playing.path.startswith(self.queue_folder) else playing.name
+            self.set_status('%d/%d  %s  [%s]' % (self.index + 1, len(self.queue), rel, kind))
             self.setProperty('playing_folder', self.display_folder(self.queue_folder))
         else:
             self.setProperty('playing_folder', '')
@@ -397,7 +445,18 @@ class Window(xbmcgui.WindowXML):
         elif aid == xbmcgui.ACTION_STOP:
             self.onClick(B_STOP)
         elif aid == xbmcgui.ACTION_CONTEXT_MENU:
-            self.toggle_sort()
+            # long press OK: on a folder = play it incl. subfolders, elsewhere = toggle sort
+            kind, e = None, None
+            if self.getFocusId() == C_LIST:
+                kind, e = self.entry_at(self.getControl(C_LIST).getSelectedPosition())
+            if kind == 'dir':
+                self.play_recursive(e)
+            else:
+                self.toggle_sort()
+        elif aid in (xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_MOVE_RIGHT) and self.getFocusId() == B_SEEK:
+            self.seek(-SEEK_STEP if aid == xbmcgui.ACTION_MOVE_LEFT else SEEK_STEP)
+        elif aid == xbmcgui.ACTION_SELECT_ITEM and self.getFocusId() == B_SEEK:
+            xbmc.executebuiltin('PlayerControl(Play)')      # OK on the bar = pause/resume
 
 
 def main():
