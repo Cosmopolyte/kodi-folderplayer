@@ -22,4 +22,6 @@ docker exec -d kodi-poc bash -c 'bash /home/kodi/entrypoint.sh > /home/kodi/cons
 - Test media are generated with ffmpeg at build time (`/home/kodi/media`, 2× audio, 2× video, 20 s each).
 - `timeline.sh` / `test.sh`: example drive scripts (restart Kodi, run add-on, poll state, screenshot).
 
-Container is kept stopped on saturn (`docker start kodi-poc`) for the next Kodi major version.
+Nothing is kept on saturn (container, image and `/tmp/kodi-poc` were removed 2026-09-01) — rebuild on demand
+from this directory, ~3–5 min. Note: Debian stable ships Kodi 21.2 and stays there, so this environment tests
+GUI/API logic, not new Kodi releases — the canary for a new Kodi version is the TV on the beta channel.
