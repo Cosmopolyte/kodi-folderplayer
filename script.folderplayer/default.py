@@ -22,7 +22,7 @@ PATH = ADDON.getAddonInfo('path')
 
 # control ids (see resources/skins/Default/720p/folderplayer.xml)
 C_LIST, C_VIDEO, C_TITLE, C_STATUS = 100, 200, 301, 300
-B_PREV, B_NEXT, B_SORT, B_FULL, B_STOP, B_SEEK = 401, 402, 403, 404, 405, 406
+B_PREV, B_NEXT, B_SORT, B_FULL, B_STOP, B_SEEK, B_PLAY = 401, 402, 403, 404, 405, 406, 407
 
 SEEK_STEP = 10          # seconds per left/right press on the progress bar
 MAX_RECURSIVE = 2000    # safety cap for "play folder incl. subfolders"
@@ -423,6 +423,9 @@ class Window(xbmcgui.WindowXML):
             self.prev()
         elif cid == B_NEXT:
             self.next()
+        elif cid == B_PLAY:
+            if self.player.isPlaying():
+                xbmc.executebuiltin('PlayerControl(Play)')
         elif cid == B_SORT:
             self.toggle_sort()
         elif cid == B_FULL:

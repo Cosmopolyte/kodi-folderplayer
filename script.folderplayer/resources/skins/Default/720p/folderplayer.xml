@@ -87,7 +87,7 @@
       <left>614</left><top>496</top><width>648</width><height>22</height>
       <label></label>
       <texturenofocus colordiffuse="00000000">white.png</texturenofocus>
-      <texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
+      <texturefocus colordiffuse="66FFFFFF">white.png</texturefocus>
       <onleft>406</onleft><onright>406</onright><onup>100</onup><ondown>401</ondown>
       <enable>Player.HasMedia</enable>
     </control>
@@ -98,28 +98,35 @@
     </control>
     <control type="label">
       <left>620</left><top>468</top><width>636</width><height>28</height>
-      <label>◀ ▶ seek ±10 s · OK = pause</label><font>font10</font><align>right</align><textcolor>FF8FA3B7</textcolor>
+      <label>&lt; &gt; seek 10 s · OK = pause</label><font>font10</font><align>right</align><textcolor>FF8FA3B7</textcolor>
       <visible>Control.HasFocus(406)</visible>
     </control>
 
-    <!-- transport buttons: row 1 = Prev / Next / Stop, row 2 = Fullscreen / Sort -->
+    <!-- transport buttons: row 1 = Prev / Play-Pause / Next / Stop, row 2 = Fullscreen / Sort -->
     <control type="group">
       <left>620</left><top>540</top>
       <control type="button" id="401">
-        <left>0</left><top>0</top><width>204</width><height>44</height>
-        <label>◀◀  Previous</label><font>font12</font><align>center</align>
+        <left>0</left><top>0</top><width>150</width><height>44</height>
+        <label>&lt;&lt; Prev</label><font>font12</font><align>center</align>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
-        <onleft>100</onleft><onright>402</onright><onup>406</onup><ondown>404</ondown>
+        <onleft>100</onleft><onright>407</onright><onup>406</onup><ondown>404</ondown>
+      </control>
+      <control type="button" id="407">
+        <left>162</left><top>0</top><width>150</width><height>44</height>
+        <label>Play/Pause</label><font>font12</font><align>center</align>
+        <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
+        <onleft>401</onleft><onright>402</onright><onup>406</onup><ondown>404</ondown>
+        <enable>Player.HasMedia</enable>
       </control>
       <control type="button" id="402">
-        <left>216</left><top>0</top><width>204</width><height>44</height>
-        <label>Next  ▶▶</label><font>font12</font><align>center</align>
+        <left>324</left><top>0</top><width>150</width><height>44</height>
+        <label>Next &gt;&gt;</label><font>font12</font><align>center</align>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
-        <onleft>401</onleft><onright>405</onright><onup>406</onup><ondown>404</ondown>
+        <onleft>407</onleft><onright>405</onright><onup>406</onup><ondown>403</ondown>
       </control>
       <control type="button" id="405">
-        <left>432</left><top>0</top><width>204</width><height>44</height>
-        <label>■  Stop</label><font>font12</font><align>center</align>
+        <left>486</left><top>0</top><width>150</width><height>44</height>
+        <label>Stop</label><font>font12</font><align>center</align>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>402</onleft><onright>100</onright><onup>406</onup><ondown>403</ondown>
       </control>

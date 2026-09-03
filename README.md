@@ -5,7 +5,7 @@ Plain folder view, no library, no scanning, no thumbnails.
 
 - Left: entries of the current folder (subfolders, audio ♪, video ▶), current title highlighted
 - Right: the video of the running title (empty/visualisation for audio), time, progress
-- Buttons: Previous · Next · Stop / Fullscreen · Sort (name / modification date)
+- Buttons: Previous · Play/Pause · Next · Stop / Fullscreen · Sort (name / modification date)
 - Remote keys: OK = open folder / play title, Back = folder up (in the start folder: exit),
   long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
   media keys (skip next/prev) work if the remote has them
@@ -78,6 +78,8 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.3 — Play/Pause button (order Prev / Play-Pause / Next / Stop), plain-text labels (glyphs like ◀◀
+  render as pause bars on some TV fonts), focused seek bar keeps the progress visible
 - 0.2.2 — play order now matches the visible list: subfolders play at their position, before the files
 - 0.2.1 — normal playback (OK on a title) now continues into the subfolders after the folder's files
 - 0.2.0 — play folder incl. subfolders (long-press OK on a folder, depth first, capped at 2000 titles),
