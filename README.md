@@ -113,6 +113,7 @@ this is a hobby project, response times vary.
 
 ## Changelog
 
+- 1.0.1 — proper logo
 - 1.0.0 — first public release: first-run folder picker, add-on icon, no private defaults
 - 0.3.x — action menu on long-press, per-folder sort incl. shuffle and persistent custom order,
   play starts the highlighted entry, click/tap-to-seek, Windows paths
