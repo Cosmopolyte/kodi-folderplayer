@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="0.2.5" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="0.2.6" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -10,7 +10,8 @@
     <platform>all</platform>
     <license>MIT</license>
     <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
-    <news>0.2.5 - rewind/forward buttons (Kodi speed steps), sort moved above the list, fullscreen as corner icon on the video
+    <news>0.2.6 - all transport buttons stay focusable while nothing plays (disabled controls are skipped by remote navigation)
+0.2.5 - rewind/forward buttons (Kodi speed steps), sort moved above the list, fullscreen as corner icon on the video
 0.2.4 - icon buttons (PNG, standard media symbols; play/pause toggles with state), high-contrast progress bar (green on black, framed)
 0.2.3 - Play/Pause button (Prev / Play-Pause / Next / Stop), plain-text button labels, visible progress on the focused seek bar
 0.2.2 - play order now matches the visible list: subfolders play at their position (before the files)

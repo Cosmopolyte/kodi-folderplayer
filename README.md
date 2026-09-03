@@ -79,6 +79,9 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.6 — transport buttons no longer use enable-conditions: Kodi skips disabled controls in navigation,
+  so rewind/play/forward were unreachable while nothing was playing
+
 - 0.2.5 — rewind/forward buttons (Kodi speed steps 2x/4x/…, play returns to 1x), sort moved above the list,
   fullscreen as corner icon on the video (second button row removed)
 

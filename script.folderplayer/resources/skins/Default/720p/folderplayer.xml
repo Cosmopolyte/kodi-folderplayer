@@ -84,7 +84,6 @@
       <label></label>
       <texturenofocus colordiffuse="AA101820">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
       <onleft>100</onleft><onright>100</onright><onup>403</onup><ondown>406</ondown>
-      <enable>Player.HasMedia</enable>
     </control>
     <control type="image">
       <left>1213</left><top>375</top><width>26</width><height>26</height>
@@ -108,7 +107,6 @@
       <texturenofocus colordiffuse="00000000">white.png</texturenofocus>
       <texturefocus colordiffuse="66FFFFFF">white.png</texturefocus>
       <onleft>406</onleft><onright>406</onright><onup>404</onup><ondown>401</ondown>
-      <enable>Player.HasMedia</enable>
     </control>
     <!-- progress: bright green on black inside a light frame (couch-readable) -->
     <control type="image">
@@ -149,7 +147,6 @@
         <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>401</onleft><onright>407</onright><onup>406</onup><ondown>100</ondown>
-        <enable>Player.HasMedia</enable>
       </control>
       <control type="image"><left>143</left><top>8</top><width>28</width><height>28</height><texture>ic-rw.png</texture></control>
       <control type="button" id="407">
@@ -157,7 +154,6 @@
         <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>408</onleft><onright>409</onright><onup>406</onup><ondown>100</ondown>
-        <enable>Player.HasMedia</enable>
       </control>
       <control type="image"><left>250</left><top>8</top><width>28</width><height>28</height><texture>ic-pause.png</texture><visible>Player.Playing</visible></control>
       <control type="image"><left>250</left><top>8</top><width>28</width><height>28</height><texture>ic-play.png</texture><visible>!Player.Playing</visible></control>
@@ -166,7 +162,6 @@
         <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>407</onleft><onright>402</onright><onup>406</onup><ondown>100</ondown>
-        <enable>Player.HasMedia</enable>
       </control>
       <control type="image"><left>357</left><top>8</top><width>28</width><height>28</height><texture>ic-ff.png</texture></control>
       <control type="button" id="402">
