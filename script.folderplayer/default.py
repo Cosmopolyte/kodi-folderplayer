@@ -561,6 +561,22 @@ class Window(xbmcgui.WindowXML):
         self.queue_folder = folder
         self.play_index(start)
 
+    def play_selected(self):
+        """Play button / media key while nothing is playing: start the highlighted entry."""
+        kind, e = self.entry_at(self.list_pos())
+        if kind == 'file':
+            self.play_from(self.folder, clicked=e)
+        elif kind == 'dir':
+            self.play_from(e.path)
+        else:
+            self.play_from(self.folder)
+
+    def play_pause(self):
+        if self.player.isPlaying():
+            xbmc.executebuiltin('PlayerControl(Play)')
+        else:
+            self.play_selected()
+
     def play_index(self, i, natural=False):
         if not self.queue:
             return
@@ -684,8 +700,7 @@ class Window(xbmcgui.WindowXML):
         elif cid == B_NEXT:
             self.next()
         elif cid == B_PLAY:
-            if self.player.isPlaying():
-                xbmc.executebuiltin('PlayerControl(Play)')
+            self.play_pause()
         elif cid == B_RW:
             if self.player.isPlaying():
                 xbmc.executebuiltin('PlayerControl(Rewind)')
@@ -735,6 +750,10 @@ class Window(xbmcgui.WindowXML):
             self.prev()
         elif aid == xbmcgui.ACTION_STOP:
             self.onClick(B_STOP)
+        elif aid in (xbmcgui.ACTION_PAUSE, getattr(xbmcgui, 'ACTION_PLAYER_PLAY', 68),
+                     getattr(xbmcgui, 'ACTION_PLAYER_PLAYPAUSE', 229)):
+            # play/pause media key: pause while playing, start the highlighted entry while idle
+            self.play_pause()
         elif aid == xbmcgui.ACTION_CONTEXT_MENU:
             # long press OK on an entry = move it; elsewhere = cycle sort
             if self.getFocusId() == C_LIST:

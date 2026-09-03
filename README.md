@@ -95,6 +95,9 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.3.1 — play button and the play/pause media key start the highlighted folder/title while nothing plays
+  (long-press OK became the move mode in 0.3.0, so folders needed a new direct play path)
+
 - 0.3.0 — per-folder sort modes incl. Shuffle and a persistent Custom order (move mode via long-press,
   auto-reconciled, reset button), local Windows path support (C:\ start folders)
 - 0.2.6 — transport buttons no longer use enable-conditions: Kodi skips disabled controls in navigation,
