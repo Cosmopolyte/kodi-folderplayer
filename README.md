@@ -15,7 +15,8 @@ Plain folder view, no library, no scanning, no thumbnails.
 - Sort mode is per folder: Name / Date / Shuffle / Custom (cycle via the sort button or long-press
   OK outside the list). Shuffle randomizes the whole tree for playback, is never stored, and blocks
   reordering; the visible list keeps its underlying order.
-- Custom order: long-press OK on an entry -> move mode (Up/Down move, OK saves, Back cancels).
+- Long-press OK on an entry opens an action menu: play from here / play only this folder/title / move.
+- Custom order: "Move" starts a move mode (Up/Down move, OK saves, Back cancels).
   The order is created on the first move, stored per folder (addon_data/folders.json) and shown as
   "Sort: Custom" with a reset button next to it. On every visit it is reconciled with reality:
   vanished names are dropped, new ones are appended alphabetically (a rename is a drop + append).
@@ -94,6 +95,8 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
   to itself — the list container would otherwise consume the navigation.
 
 ## Changelog
+
+- 0.3.2 — long-press OK on an entry opens an action menu (play from here / play only this / move)
 
 - 0.3.1 — play button and the play/pause media key start the highlighted folder/title while nothing plays
   (long-press OK became the move mode in 0.3.0, so folders needed a new direct play path)

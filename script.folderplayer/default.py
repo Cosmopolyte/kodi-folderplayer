@@ -561,6 +561,43 @@ class Window(xbmcgui.WindowXML):
         self.queue_folder = folder
         self.play_index(start)
 
+    def entry_menu(self, pos):
+        """Long press OK on an entry: small menu with the possible actions."""
+        kind, e = self.entry_at(pos)
+        if kind not in ('dir', 'file'):
+            return False
+        shuffle = self.mode_of(self.folder) == SORT_SHUFFLE
+        opts = ['Play from here',
+                'Play only this folder' if kind == 'dir' else 'Play only this title']
+        if not shuffle:
+            opts.append('Move (change order)')
+        choice = xbmcgui.Dialog().contextmenu(opts)
+        log('entry menu %s on %s -> %s' % (kind, e.name, choice))
+        if choice == 0:
+            if kind == 'file' or shuffle:
+                self.play_from(self.folder, clicked=e if kind == 'file' else None)
+            else:
+                # folder: start the current list's queue at this folder's first title
+                files = self.busy_collect(self.folder)
+                if not files:
+                    self.set_status('No media files in %s' % leaf_of(self.folder))
+                    return True
+                norm = e.path.replace('\\', '/')
+                start = next((i for i, q in enumerate(files) if q.path.replace('\\', '/').startswith(norm)), 0)
+                self.queue = files
+                self.queue_folder = self.folder
+                self.play_index(start)
+        elif choice == 1:
+            if kind == 'dir':
+                self.play_from(e.path)
+            else:
+                self.queue = [e]
+                self.queue_folder = self.folder
+                self.play_index(0)
+        elif choice == 2:
+            self.start_move(pos)
+        return True
+
     def play_selected(self):
         """Play button / media key while nothing is playing: start the highlighted entry."""
         kind, e = self.entry_at(self.list_pos())
@@ -755,13 +792,9 @@ class Window(xbmcgui.WindowXML):
             # play/pause media key: pause while playing, start the highlighted entry while idle
             self.play_pause()
         elif aid == xbmcgui.ACTION_CONTEXT_MENU:
-            # long press OK on an entry = move it; elsewhere = cycle sort
-            if self.getFocusId() == C_LIST:
-                pos = self.list_pos()
-                kind, _ = self.entry_at(pos)
-                if kind in ('dir', 'file'):
-                    self.start_move(pos)
-                    return
+            # long press OK on an entry = action menu; elsewhere = cycle sort
+            if self.getFocusId() == C_LIST and self.entry_menu(self.list_pos()):
+                return
             self.cycle_mode()
         elif aid in (xbmcgui.ACTION_MOVE_LEFT, xbmcgui.ACTION_MOVE_RIGHT) and self.getFocusId() == B_SEEK:
             self.seek(-SEEK_STEP if aid == xbmcgui.ACTION_MOVE_LEFT else SEEK_STEP)

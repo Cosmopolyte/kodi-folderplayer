@@ -200,7 +200,7 @@
     <!-- footer hint -->
     <control type="label">
       <left>24</left><top>660</top><width>1232</width><height>30</height>
-      <label>OK = open folder / play title   ·   long press OK on an entry = move it (custom order)   ·   Back = folder up / exit</label>
+      <label>OK = open folder / play title   ·   long press OK on an entry = play / move menu   ·   Back = folder up / exit</label>
       <font>font10</font><textcolor>FF4A5A6A</textcolor>
       <visible>String.IsEmpty(Window.Property(moving))</visible>
     </control>
