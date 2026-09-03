@@ -116,6 +116,7 @@ this is a hobby project, response times vary.
 
 ## Changelog
 
+- 1.0.3 — public home on GitHub
 - 1.0.2 — icon file renamed (Kodi caches icons by URL — a changed logo needs a new filename)
 - 1.0.1 — proper logo
 - 1.0.0 — first public release: first-run folder picker, add-on icon, no private defaults

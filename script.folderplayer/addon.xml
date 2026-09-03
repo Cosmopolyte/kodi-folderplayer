@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="1.0.2" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="1.0.3" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -9,11 +9,12 @@
     <description lang="en_GB">Plain folder view without library or scanning: the titles of the current folder on the left, the video of the running title on the right (empty for audio). Audio and video files play mixed in one queue, subfolders play at their list position. Per-folder sort (name, date, shuffle, custom order via move mode), seekable progress bar, fullscreen kept across titles. Made for TV remotes; mouse and touch work too.</description>
     <platform>all</platform>
     <license>MIT</license>
-    <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
+    <source>https://github.com/Cosmopolyte/kodi-folderplayer</source>
     <assets>
       <icon>resources/icon-fp.png</icon>
     </assets>
-    <news>1.0.2 - icon file renamed so Kodi's texture cache picks up the new logo
+    <news>1.0.3 - public home: https://github.com/Cosmopolyte/kodi-folderplayer
+1.0.2 - icon file renamed so Kodi's texture cache picks up the new logo
 1.0.1 - proper logo (thanks to the project owner)
 1.0.0 - first public release: first-run folder picker, add-on icon, no private defaults
 0.3.5 - click-to-seek fixed at any window size
