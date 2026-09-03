@@ -41,6 +41,9 @@ B_MOVEGRAB, B_RESET = 410, 411
 # Kodi window ids
 WIN_FULLSCREEN_VIDEO, WIN_VISUALISATION = 12005, 12006
 
+# seek bar geometry in skin coordinates (see folderplayer.xml, control 406)
+SEEK_X, SEEK_Y, SEEK_W, SEEK_H = 614, 490, 648, 34   # a little taller for fat fingers
+
 AUDIO_EXT = ('.mp3', '.flac', '.m4a', '.ogg', '.opus', '.wav', '.aac', '.wma', '.aiff', '.ape', '.wv')
 VIDEO_EXT = ('.mp4', '.mkv', '.m4v', '.avi', '.webm', '.mov', '.mpg', '.mpeg', '.ts', '.wmv')
 MEDIA_EXT = AUDIO_EXT + VIDEO_EXT
@@ -656,6 +659,21 @@ class Window(xbmcgui.WindowXML):
         elif self.player.isPlayingAudio():
             xbmc.executebuiltin('ActivateWindow(%d)' % WIN_VISUALISATION)
 
+    def seek_to_fraction(self, x):
+        """Mouse click / touch tap on the progress bar: jump to that position."""
+        try:
+            if not self.player.isPlaying():
+                return
+            total = self.player.getTotalTime()
+            if not total:
+                return
+            frac = min(1.0, max(0.0, (x - 620.0) / 636.0))
+            t = min(frac * total, total - 1)
+            log('click-seek to %.0f%% (%.0fs)' % (frac * 100, t))
+            self.player.seekTime(t)
+        except Exception as e:
+            log('click-seek failed: %s' % e, xbmc.LOGWARNING)
+
     def seek(self, delta):
         try:
             if not self.player.isPlaying():
@@ -801,6 +819,11 @@ class Window(xbmcgui.WindowXML):
             self.seek(-SEEK_STEP if aid == xbmcgui.ACTION_MOVE_LEFT else SEEK_STEP)
         elif aid == xbmcgui.ACTION_SELECT_ITEM and self.getFocusId() == B_SEEK:
             xbmc.executebuiltin('PlayerControl(Play)')
+        elif aid in (getattr(xbmcgui, 'ACTION_MOUSE_LEFT_CLICK', 100), getattr(xbmcgui, 'ACTION_TOUCH_TAP', 401)):
+            # click-to-seek: mouse/touch position comes with the action (skin coordinates)
+            x, y = action.getAmount1(), action.getAmount2()
+            if SEEK_X <= x <= SEEK_X + SEEK_W and SEEK_Y <= y <= SEEK_Y + SEEK_H:
+                self.seek_to_fraction(x)
 
 
 def main():
