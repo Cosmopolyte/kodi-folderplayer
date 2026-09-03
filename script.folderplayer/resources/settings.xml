@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-  <setting id="start_folder" type="folder" source="auto" label="Start folder" default="smb://jupiter.vialactea.at/content/pub/Music/"/>
-  <setting id="sort" type="labelenum" label="Sort order" values="name|date" default="name"/>
+  <setting id="start_folder" type="folder" source="auto" label="Start folder" default=""/>
+  <setting id="sort" type="labelenum" label="Default sort order" values="name|date" default="name"/>
   <setting id="logfolder" type="folder" source="auto" label="Log file folder (optional, for troubleshooting)" default=""/>
 </settings>

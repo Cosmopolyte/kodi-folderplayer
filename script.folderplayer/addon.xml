@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="0.3.5" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="1.0.0" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
   <extension point="xbmc.python.script" library="default.py"/>
   <extension point="xbmc.addon.metadata">
     <summary lang="en_GB">Play a folder of mixed audio and video files as one playlist</summary>
-    <description lang="en_GB">Plain folder view without library: titles of the current folder on the left, video on the right (empty for audio). Previous/next, fullscreen, sort by name or modification date.</description>
+    <description lang="en_GB">Plain folder view without library or scanning: the titles of the current folder on the left, the video of the running title on the right (empty for audio). Audio and video files play mixed in one queue, subfolders play at their list position. Per-folder sort (name, date, shuffle, custom order via move mode), seekable progress bar, fullscreen kept across titles. Made for TV remotes; mouse and touch work too.</description>
     <platform>all</platform>
     <license>MIT</license>
     <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
-    <news>0.3.5 - click-to-seek fixed: pointer coordinates are window pixels, now scaled to skin coordinates
-0.3.4 - click or tap on the progress bar seeks to that position (mouse and touch)
-0.3.3 - opening a folder selects its first entry instead of ".."
-0.3.2 - long press OK on an entry opens an action menu: play from here / play only this / move
-0.3.1 - play button and play/pause media key start the highlighted folder/title while nothing is playing
-0.3.0 - custom order per folder (long press OK on an entry = move, auto-saved, reset button), sort mode per folder, shuffle, Windows path support
-0.2.6 - all transport buttons stay focusable while nothing plays (disabled controls are skipped by remote navigation)
-0.2.5 - rewind/forward buttons (Kodi speed steps), sort moved above the list, fullscreen as corner icon on the video
-0.2.4 - icon buttons (PNG, standard media symbols; play/pause toggles with state), high-contrast progress bar (green on black, framed)
-0.2.3 - Play/Pause button (Prev / Play-Pause / Next / Stop), plain-text button labels, visible progress on the focused seek bar
-0.2.2 - play order now matches the visible list: subfolders play at their position (before the files)
-0.2.1 - normal playback (OK on a title) continues into the subfolders after the folder's files
-0.2.0 - play folder incl. subfolders (long press OK on a folder), seekable progress bar (left/right = 10 s, OK = pause)
-0.1.1 - English UI, button layout, fullscreen kept across titles, optional log file
-0.1.0 - first test version</news>
+    <assets>
+      <icon>resources/icon.png</icon>
+    </assets>
+    <news>1.0.0 - first public release: first-run folder picker, add-on icon, no private defaults
+0.3.5 - click-to-seek fixed at any window size
+0.3.x - action menu, per-folder sort incl. shuffle and persistent custom order, Windows paths
+0.2.x - list = playlist incl. subfolders, icon buttons, seekable bar, fullscreen kept across titles
+0.1.x - first versions</news>
   </extension>
 </addon>

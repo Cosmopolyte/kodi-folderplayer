@@ -1,130 +1,121 @@
 # Folder Player — Kodi add-on (`script.folderplayer`)
 
-Play a folder of **mixed audio and video files** as one playlist on Kodi (Android/Google TVs).
-Plain folder view, no library, no scanning, no thumbnails.
+Play a folder of **mixed audio and video files** as one playlist.
 
-- Left: entries of the current folder (subfolders, audio ♪, video ▶), current title highlighted
-- Right: the video of the running title (empty/visualisation for audio), time, progress
-- Transport icons: prev · rewind · play/pause (state-aware) · forward · next · stop; sort button above the list;
-  fullscreen as a corner icon on the video
-- Remote keys: OK = open folder / play title, Back = folder up (in the start folder: exit),
-  long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
-  media keys (skip next/prev) work if the remote has them
+Kodi's own players keep music and music videos apart: a playlist started with an audio file stays in
+the audio player, which plays a `.mp4` as sound only. Folder Player treats a folder as one queue —
+`.mp3` next to `.mp4` next to `.flac`, in the order you see — and lets Kodi pick the right player
+core per file. No library, no scanning, no thumbnails: a plain folder view.
+
+Built for TV remotes (Android/Google TV); mouse and touch work too. Tested on Kodi 21 (Linux,
+Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
+
+## Features
+
+- Left: the current folder (subfolders, audio ♪, video ▶), right: the video of the running title
+  (visualisation/empty for audio), time, seekable progress bar (green on black, couch-readable)
 - The playlist is the visible list read top to bottom: subfolders are expanded at their position
   (depth first, each with its own sort mode), then the folder's files; clicking a title starts there
-- Sort mode is per folder: Name / Date / Shuffle / Custom (cycle via the sort button or long-press
-  OK outside the list). Shuffle randomizes the whole tree for playback, is never stored, and blocks
-  reordering; the visible list keeps its underlying order.
-- Long-press OK on an entry opens an action menu: play from here / play only this folder/title / move.
-- Custom order: "Move" starts a move mode (Up/Down move, OK saves, Back cancels).
-  The order is created on the first move, stored per folder (addon_data/folders.json) and shown as
-  "Sort: Custom" with a reset button next to it. On every visit it is reconciled with reality:
-  vanished names are dropped, new ones are appended alphabetically (a rename is a drop + append).
-  Stored data of a folder is only removed when its PARENT folder is readable and the folder is
-  really gone - an unreachable share or unplugged drive never deletes anything.
-- No sync across devices by design. The "Backup" add-on (robweber) can back up addon_data; porting
-  to another device means copying `userdata/addon_data/script.folderplayer/` over manually.
-- Progress bar is focusable (Up from the buttons): Left/Right = seek ±10 s (hold to repeat), OK = pause/resume
-- Fullscreen is kept across titles (Kodi's own fullscreen video / music window), Back returns to the add-on
-- While playing a folder tree, the list highlights the subfolder that contains the running title
+- Transport icons: prev · rewind · play/pause (state-aware) · forward · next · stop;
+  fullscreen as a corner icon on the video; fullscreen is kept across titles, Back returns
+- **Per-folder sort**: Name / Date / **Shuffle** / **Custom**. Shuffle randomizes the whole tree for
+  playback (never stored, list keeps its order). Custom order: move entries by hand — created on the
+  first move, auto-saved per folder, reset button next to the sort button
+- Custom orders reconcile against reality on every visit: vanished names are dropped, new ones are
+  appended alphabetically (a rename is drop + append). Stored data of a folder is only removed when
+  its parent folder is readable and the folder is really gone — an unreachable share or unplugged
+  drive never deletes anything
+- Browse while playing: the header shows what folder is playing, the list highlights the running
+  title (or the subfolder containing it)
 
-## Why an add-on
+## Controls
 
-Kodi's own playlist auto-advance keeps the player core of the first title: a playlist started with an
-audio file stays in PAPlayer, which plays `.mp4` as audio only. Folder Player therefore starts every
-title itself (`Player.play(path, listitem, windowed=True)`), so Kodi picks the right core per file,
-and draws the video into a `videowindow` control of its own `WindowXML`.
+| Input | Action |
+|---|---|
+| OK on a folder | open it (cursor lands on the first entry) |
+| OK on a title | play the list from there |
+| Long-press OK on an entry | menu: **Play from here** · **Play only this folder/title** · **Move** |
+| Long-press OK elsewhere | cycle sort mode |
+| Back | folder up; in the start folder: exit |
+| Play/pause media key | pause/resume; when idle: play the highlighted folder/title |
+| Skip keys | previous / next title |
+| Progress bar | focus it: Left/Right seek 10 s, OK = pause; mouse/touch: click to seek |
+| Move mode | Up/Down move the entry, OK saves the custom order, Back cancels |
 
-Add-ons live in `userdata/addons` and survive Kodi (Play Store) updates — no patching, no skin fork.
-Tested on Kodi 21.2 (Linux) and Kodi 22 beta 1 (Android TV).
+## Install
 
-## Install / update on a TV
+1. Kodi → Settings → System → Add-ons → **Unknown sources** on
+2. Add-ons → **Install from zip file** → pick `script.folderplayer-<version>.zip`
+   (from a local download, USB stick, or a network source you add via *Add network location…*)
+3. Add-ons → Program add-ons → **Folder Player** — on first start it asks for your music folder
 
-1. Kodi → Settings → System → Add-ons → **Unknown sources** on (once)
-2. File manager → Add source → Browse → **Add network location…** (SMB, `jupiter.vialactea.at`, `kodi$`) → name `kodi$` (once)
-3. Add-ons → **Install from zip file** → `kodi$` → `addons` → `script.folderplayer-<version>.zip`
-4. Add-ons → Program add-ons → Folder Player
+Settings: start folder, default sort order, optional log-file folder (for troubleshooting; Kodi's
+own log is hard to reach on Android TVs — the add-on then writes `folderplayer-<device>.log` there).
 
-Settings (add-on → Configure): start folder (default `smb://jupiter.vialactea.at/content/pub/Music/`),
-sort order, optional log-file folder (e.g. `smb://jupiter.vialactea.at/kodi$/` — Kodi's own log is not
-reachable on Android TVs; the add-on then writes `folderplayer-<device>.log` there).
+Updates: install the newer zip over the old one; settings and custom orders are kept. Add-ons live
+in `userdata/addons` and survive Kodi updates.
+
+No sync across devices by design. The **Backup** add-on (robweber) can back up `addon_data`;
+porting to another device means copying `userdata/addon_data/script.folderplayer/` over manually.
 
 ## Build the zip
 
 ```
-cd script.folderplayer/.. && python3 -c "
+python3 -c "
 import zipfile, os
 z = zipfile.ZipFile('script.folderplayer-VERSION.zip', 'w', zipfile.ZIP_DEFLATED)
 for r, d, fs in os.walk('script.folderplayer'):
-    for f in fs: z.write(os.path.join(r, f))
+    for f in fs:
+        if not f.endswith('.pyc'): z.write(os.path.join(r, f))
 z.close()"
 ```
 The zip must contain the top-level folder `script.folderplayer/`.
 
 ## Test environment (`testenv/`)
 
-Throw-away Docker container with Debian + Kodi + Xvfb (software GL) + PulseAudio null sink, driven via
-JSON-RPC on `127.0.0.1:8090`; screenshots via `Input.ExecuteAction screenshot`. See `testenv/README.md`.
-
-## Remote control of a TV for testing
-
-Kodi → Settings → Services → Control → *Allow remote control via HTTP*. Then e.g.
-
-```
-curl -u user:pw http://<tv>:<port>/jsonrpc -H 'Content-Type: application/json' \
-  -d '{"jsonrpc":"2.0","id":1,"method":"Addons.ExecuteAddon","params":{"addonid":"script.folderplayer"}}'
-```
-`GUI.GetProperties currentwindow` → `13000` = add-on window open. Screenshots are black on Android.
+Throw-away Docker container: Debian + Kodi + Xvfb (software GL) + PulseAudio null sink, driven via
+JSON-RPC on `127.0.0.1:8090`; screenshots via `Input.ExecuteAction screenshot`, real mouse clicks
+via `xdotool` against the Xvfb display. See `testenv/README.md`.
 
 ## Layout / ids
 
 `resources/skins/Default/720p/folderplayer.xml` — list 100, videowindow 200, status 300, title 301,
-buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
+buttons 401 prev, 408 rewind, 407 play/pause, 409 forward, 402 next, 405 stop, 403 sort,
+411 reset custom, 404 fullscreen, 406 seek bar, 410 move-mode grab handle.
 
 ## Known Kodi pitfalls (found while building this)
 
-- List reload (`reset()` + `addItems`) triggered from `onAction` leaves the container cursor invalid —
-  the next Select is swallowed. Fix: `xbmc.executebuiltin('SetFocus(100,<pos>)')` after filling.
-- `onPlayBackStopped` also fires for our own title switch → `switching` flag, otherwise auto-advance dies.
-- Returning from fullscreen fires `onInit` again → `started` guard keeps the state.
-- Addon skins have no default textures → ship `white.png`.
-- `colordiffuse="00000000"` does NOT hide a texture (renders opaque) — use an empty texture tag instead.
-- Controls with `enable` conditions are skipped by remote navigation (see 0.2.6).
-- A list reload must not steal the focus back to the list when a button (e.g. sort) had it.
+- Kodi's playlist auto-advance keeps the player core of the first title (audio start = `.mp4` plays
+  as sound only) → start every title yourself with `Player.play(path, listitem, windowed=True)`.
+- A list reload (`reset()` + `addItems`) triggered from `onAction` leaves the container cursor
+  invalid — the next Select is swallowed. Fix: `xbmc.executebuiltin('SetFocus(<id>,<pos>)')`.
+- A list reload must not steal the focus back to the list when a button had it.
+- `onPlayBackStopped` also fires for your own title switch → guard with a flag.
+- Returning from fullscreen fires `onInit` again → keep state behind a guard.
+- Controls with `enable` conditions are skipped by remote navigation — never gate navigable controls.
+- Add-on skins have no default textures → ship your own `white.png`; `colordiffuse="00000000"` does
+  NOT hide a texture (renders opaque) — use an empty texture tag instead.
+- TV fonts render media glyphs (◀◀ ▶▶) unreliably → ship PNG icons. ⏮/⏭ (with bar) = prev/next,
+  ⏪/⏩ (without) = rewind/ff.
 - To capture Up/Down for a move mode, park the focus on an invisible button whose onup/ondown point
   to itself — the list container would otherwise consume the navigation.
+- Pointer actions (`ACTION_MOUSE_LEFT_CLICK`, `ACTION_TOUCH_TAP`) carry **window pixels**, not skin
+  coordinates — scale by `xbmcgui.getScreenWidth()/Height()` before hit-testing.
+- `xbmcvfs.listdir` can return empty lists instead of raising on errors — never treat an empty
+  listing as proof that things were deleted.
+- Never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `\x89PNG\r\n`.
+
+## About
+
+Developed with AI assistance (Anthropic's Claude, driven and reviewed by a human) for a family of
+Google TVs, released in the hope it is useful. MIT license, no warranty. Issues and PRs welcome —
+this is a hobby project, response times vary.
 
 ## Changelog
 
-- 0.3.5 — click-to-seek works at any window size (pointer coordinates are window pixels, not skin coordinates)
-
-- 0.3.3 — opening a folder selects its first entry instead of ".." (and Play on ".." plays the current folder)
-
-- 0.3.2 — long-press OK on an entry opens an action menu (play from here / play only this / move)
-
-- 0.3.1 — play button and the play/pause media key start the highlighted folder/title while nothing plays
-  (long-press OK became the move mode in 0.3.0, so folders needed a new direct play path)
-
-- 0.3.0 — per-folder sort modes incl. Shuffle and a persistent Custom order (move mode via long-press,
-  auto-reconciled, reset button), local Windows path support (C:\ start folders)
-- 0.2.6 — transport buttons no longer use enable-conditions: Kodi skips disabled controls in navigation,
-  so rewind/play/forward were unreachable while nothing was playing
-
-- 0.2.5 — rewind/forward buttons (Kodi speed steps 2x/4x/…, play returns to 1x), sort moved above the list,
-  fullscreen as corner icon on the video (second button row removed)
-
-- 0.2.4 — icon-only transport buttons (own PNGs — TV fonts render media glyphs unreliably; ⏮/⏭ with bar =
-  prev/next, ⏪/⏩ without = rewind/ff), play/pause icon follows the player state, progress bar bright green
-  on black in a light frame (readable from the couch)
-- 0.2.3 — Play/Pause button (order Prev / Play-Pause / Next / Stop), plain-text labels (glyphs like ◀◀
-  render as pause bars on some TV fonts), focused seek bar keeps the progress visible
-- 0.2.2 — play order now matches the visible list: subfolders play at their position, before the files
-- 0.2.1 — normal playback (OK on a title) now continues into the subfolders after the folder's files
-- 0.2.0 — play folder incl. subfolders (long-press OK on a folder, depth first, capped at 2000 titles),
-  seekable progress bar (Left/Right ±10 s, OK = pause), list highlights the subfolder of the running title
-- 0.1.1 — English UI, button layout (Prev/Next/Stop + Fullscreen/Sort), fullscreen kept across titles, optional log file
-- 0.1.0 — first version (folder browser, mixed playback, sort by name/date), tested on WZ-TV (Kodi 22 beta 1)
-
-Ideas: none open right now — generalisation pass for a public release is next.
-
-Note for developers: never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `\x89PNG\r\n`.
+- 1.0.0 — first public release: first-run folder picker, add-on icon, no private defaults
+- 0.3.x — action menu on long-press, per-folder sort incl. shuffle and persistent custom order,
+  play starts the highlighted entry, click/tap-to-seek, Windows paths
+- 0.2.x — list = playlist incl. subfolders, icon transport buttons, seekable high-contrast bar,
+  fullscreen kept across titles, English UI
+- 0.1.x — first versions: folder browser, mixed playback, sort by name/date

@@ -312,7 +312,11 @@ class Window(xbmcgui.WindowXML):
         except Exception as e:
             log('listdir failed %s: %s' % (folder, e), xbmc.LOGERROR)
             return None
-        self.store.gc_children(folder, set(dnames))
+        if dnames or fnames:
+            # only GC when the listing really returned content: xbmcvfs.listdir can
+            # return empty lists instead of raising on some errors, and an error
+            # must never delete stored orders (rule: unreachable deletes nothing)
+            self.store.gc_children(folder, set(dnames))
         need_date = mode == SORT_DATE
         dirs = [Entry(d, join(folder, d) + sep_of(folder), True) for d in dnames]
         files = []
@@ -834,15 +838,35 @@ class Window(xbmcgui.WindowXML):
                 self.seek_to_fraction(x)
 
 
+def choose_folder(heading):
+    return xbmcgui.Dialog().browse(0, heading, 'music')
+
+
 def main():
-    folder = ADDON.getSetting('start_folder') or 'smb://jupiter.vialactea.at/content/pub/Music/'
+    folder = ADDON.getSetting('start_folder')
     sort = ADDON.getSetting('sort') or SORT_NAME
     if len(sys.argv) > 1 and sys.argv[1]:
         folder = sys.argv[1]
     if len(sys.argv) > 2 and sys.argv[2] in (SORT_NAME, SORT_DATE):
         sort = sys.argv[2]
+    if not folder:
+        # first run: pick the music folder (also configurable in the add-on settings)
+        folder = choose_folder('Folder Player: choose your music folder')
+        if not folder:
+            return
+        ADDON.setSetting('start_folder', folder)
     if not folder.endswith(('/', '\\')):
         folder += sep_of(folder)
+    if not xbmcvfs.exists(folder):
+        if not xbmcgui.Dialog().yesno('Folder Player',
+                                      'The start folder is not reachable:\n%s\nChoose another folder?' % folder):
+            return
+        folder = choose_folder('Folder Player: choose your music folder')
+        if not folder:
+            return
+        ADDON.setSetting('start_folder', folder)
+        if not folder.endswith(('/', '\\')):
+            folder += sep_of(folder)
     open_logfile(ADDON.getSetting('logfolder'))
     log('start folder=%s sort=%s' % (folder, sort))
     win = Window('folderplayer.xml', PATH, 'Default', '720p', folder=folder, sort=sort)
