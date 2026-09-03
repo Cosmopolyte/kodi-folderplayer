@@ -820,8 +820,16 @@ class Window(xbmcgui.WindowXML):
         elif aid == xbmcgui.ACTION_SELECT_ITEM and self.getFocusId() == B_SEEK:
             xbmc.executebuiltin('PlayerControl(Play)')
         elif aid in (getattr(xbmcgui, 'ACTION_MOUSE_LEFT_CLICK', 100), getattr(xbmcgui, 'ACTION_TOUCH_TAP', 401)):
-            # click-to-seek: mouse/touch position comes with the action (skin coordinates)
+            # click-to-seek: the action carries the position in GUI pixels of the
+            # current resolution -> scale to the skin's 1280x720 coordinates
             x, y = action.getAmount1(), action.getAmount2()
+            try:
+                sw, sh = xbmcgui.getScreenWidth(), xbmcgui.getScreenHeight()
+                if sw and sh:
+                    x, y = x * 1280.0 / sw, y * 720.0 / sh
+            except Exception:
+                pass
+            log('mouse/touch %d at raw=(%.0f,%.0f) skin=(%.0f,%.0f)' % (aid, action.getAmount1(), action.getAmount2(), x, y), xbmc.LOGDEBUG)
             if SEEK_X <= x <= SEEK_X + SEEK_W and SEEK_Y <= y <= SEEK_Y + SEEK_H:
                 self.seek_to_fraction(x)
 

@@ -96,6 +96,8 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.3.5 — click-to-seek works at any window size (pointer coordinates are window pixels, not skin coordinates)
+
 - 0.3.3 — opening a folder selects its first entry instead of ".." (and Play on ".." plays the current folder)
 
 - 0.3.2 — long-press OK on an entry opens an action menu (play from here / play only this / move)
