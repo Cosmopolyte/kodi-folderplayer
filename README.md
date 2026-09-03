@@ -9,6 +9,8 @@ Plain folder view, no library, no scanning, no thumbnails.
 - Remote keys: OK = open folder / play title, Back = folder up (in the start folder: exit),
   long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
   media keys (skip next/prev) work if the remote has them
+- The playlist is the visible list read top to bottom: subfolders are expanded at their position
+  (depth first), then the folder's files; clicking a title starts there
 - Progress bar is focusable (Up from the buttons): Left/Right = seek ±10 s (hold to repeat), OK = pause/resume
 - Fullscreen is kept across titles (Kodi's own fullscreen video / music window), Back returns to the add-on
 - While playing a folder tree, the list highlights the subfolder that contains the running title
@@ -76,6 +78,7 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.2 — play order now matches the visible list: subfolders play at their position, before the files
 - 0.2.1 — normal playback (OK on a title) now continues into the subfolders after the folder's files
 - 0.2.0 — play folder incl. subfolders (long-press OK on a folder, depth first, capped at 2000 titles),
   seekable progress bar (Left/Right ±10 s, OK = pause), list highlights the subfolder of the running title

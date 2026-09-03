@@ -125,14 +125,16 @@ def read_folder(folder, sort=SORT_NAME):
 
 
 def collect_recursive(folder, sort=SORT_NAME, limit=MAX_RECURSIVE):
-    """All media files of a folder tree: files of the folder first, then each subfolder (depth first)."""
+    """All media files of a folder tree in LIST order: subfolders expanded at their
+    position (depth first), then the folder's own files - the playlist is exactly
+    the visible list read top to bottom."""
     out = []
     dirs, files = read_folder(folder, sort)
-    out.extend(files)
     for d in dirs:
         if len(out) >= limit:
             break
         out.extend(collect_recursive(d.path, sort, limit - len(out)))
+    out.extend(files)
     return out[:limit]
 
 
@@ -275,7 +277,7 @@ class Window(xbmcgui.WindowXML):
         self.play_index(start_index)
 
     def build_queue(self, folder):
-        """Flat queue of a folder tree: files of the folder first, then each subfolder (depth first)."""
+        """Flat queue of a folder tree in list order (subfolders at their position, then files)."""
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
         try:
             files = collect_recursive(folder, self.sort)
@@ -413,8 +415,7 @@ class Window(xbmcgui.WindowXML):
             elif kind == 'dir':
                 self.load_folder(e.path)
             elif kind == 'file':
-                # queue = this folder's files, then its subfolders (files of the current
-                # folder are the head of the flat list, so the clicked index carries over)
+                # queue = the visible list flattened top to bottom; start at the clicked title
                 files = self.build_queue(self.folder)
                 start = next((i for i, q in enumerate(files) if q.path == e.path), 0)
                 self.play_folder(self.folder, files, start)

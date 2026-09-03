@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="0.2.1" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="0.2.2" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -10,7 +10,8 @@
     <platform>all</platform>
     <license>MIT</license>
     <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
-    <news>0.2.1 - normal playback (OK on a title) continues into the subfolders after the folder's files
+    <news>0.2.2 - play order now matches the visible list: subfolders play at their position (before the files)
+0.2.1 - normal playback (OK on a title) continues into the subfolders after the folder's files
 0.2.0 - play folder incl. subfolders (long press OK on a folder), seekable progress bar (left/right = 10 s, OK = pause)
 0.1.1 - English UI, button layout, fullscreen kept across titles, optional log file
 0.1.0 - first test version</news>
