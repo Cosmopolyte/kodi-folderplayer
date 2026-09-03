@@ -103,7 +103,10 @@ buttons 401 prev, 408 rewind, 407 play/pause, 409 forward, 402 next, 405 stop, 4
   coordinates — scale by `xbmcgui.getScreenWidth()/Height()` before hit-testing.
 - `xbmcvfs.listdir` can return empty lists instead of raising on errors — never treat an empty
   listing as proof that things were deleted.
-- Never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `\x89PNG\r\n`.
+- Never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `�PNG
+`.
+- Kodi caches add-on icons by file URL (Textures db) — replacing the logo under the same filename keeps
+  showing the old one in most views; rename the icon file when the artwork changes.
 
 ## About
 
@@ -113,6 +116,7 @@ this is a hobby project, response times vary.
 
 ## Changelog
 
+- 1.0.2 — icon file renamed (Kodi caches icons by URL — a changed logo needs a new filename)
 - 1.0.1 — proper logo
 - 1.0.0 — first public release: first-run folder picker, add-on icon, no private defaults
 - 0.3.x — action menu on long-press, per-folder sort incl. shuffle and persistent custom order,

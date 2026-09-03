@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="1.0.1" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="1.0.2" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -11,9 +11,10 @@
     <license>MIT</license>
     <source>https://git.vialactea.at/vialactea/kodi-folderplayer</source>
     <assets>
-      <icon>resources/icon.png</icon>
+      <icon>resources/icon-fp.png</icon>
     </assets>
-    <news>1.0.1 - proper logo (thanks to the project owner)
+    <news>1.0.2 - icon file renamed so Kodi's texture cache picks up the new logo
+1.0.1 - proper logo (thanks to the project owner)
 1.0.0 - first public release: first-run folder picker, add-on icon, no private defaults
 0.3.5 - click-to-seek fixed at any window size
 0.3.x - action menu, per-folder sort incl. shuffle and persistent custom order, Windows paths
