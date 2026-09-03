@@ -91,8 +91,21 @@
       <onleft>406</onleft><onright>406</onright><onup>100</onup><ondown>401</ondown>
       <enable>Player.HasMedia</enable>
     </control>
+    <!-- progress: bright green on black inside a light frame (couch-readable) -->
+    <control type="image">
+      <left>617</left><top>497</top><width>642</width><height>20</height>
+      <texture colordiffuse="FF8FA3B7">white.png</texture>
+      <visible>Player.HasMedia</visible>
+    </control>
+    <control type="image">
+      <left>619</left><top>499</top><width>638</width><height>16</height>
+      <texture colordiffuse="FF000000">white.png</texture>
+      <visible>Player.HasMedia</visible>
+    </control>
     <control type="progress">
-      <left>620</left><top>502</top><width>636</width><height>10</height>
+      <left>620</left><top>500</top><width>636</width><height>14</height>
+      <texturebg colordiffuse="FF000000">white.png</texturebg>
+      <midtexture colordiffuse="FF7CE38B">white.png</midtexture>
       <info>Player.Progress</info>
       <visible>Player.HasMedia</visible>
     </control>
@@ -107,28 +120,50 @@
       <left>620</left><top>540</top>
       <control type="button" id="401">
         <left>0</left><top>0</top><width>150</width><height>44</height>
-        <label>&lt;&lt; Prev</label><font>font12</font><align>center</align>
+        <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>100</onleft><onright>407</onright><onup>406</onup><ondown>404</ondown>
       </control>
+      <control type="image">
+        <left>61</left><top>8</top><width>28</width><height>28</height>
+        <texture>ic-prev.png</texture>
+      </control>
       <control type="button" id="407">
         <left>162</left><top>0</top><width>150</width><height>44</height>
-        <label>Play/Pause</label><font>font12</font><align>center</align>
+        <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>401</onleft><onright>402</onright><onup>406</onup><ondown>404</ondown>
         <enable>Player.HasMedia</enable>
       </control>
+      <control type="image">
+        <left>223</left><top>8</top><width>28</width><height>28</height>
+        <texture>ic-pause.png</texture>
+        <visible>Player.Playing</visible>
+      </control>
+      <control type="image">
+        <left>223</left><top>8</top><width>28</width><height>28</height>
+        <texture>ic-play.png</texture>
+        <visible>!Player.Playing</visible>
+      </control>
       <control type="button" id="402">
         <left>324</left><top>0</top><width>150</width><height>44</height>
-        <label>Next &gt;&gt;</label><font>font12</font><align>center</align>
+        <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>407</onleft><onright>405</onright><onup>406</onup><ondown>403</ondown>
       </control>
+      <control type="image">
+        <left>385</left><top>8</top><width>28</width><height>28</height>
+        <texture>ic-next.png</texture>
+      </control>
       <control type="button" id="405">
         <left>486</left><top>0</top><width>150</width><height>44</height>
-        <label>Stop</label><font>font12</font><align>center</align>
+        <label></label>
         <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
         <onleft>402</onleft><onright>100</onright><onup>406</onup><ondown>403</ondown>
+      </control>
+      <control type="image">
+        <left>547</left><top>8</top><width>28</width><height>28</height>
+        <texture>ic-stop.png</texture>
       </control>
       <control type="button" id="404">
         <left>0</left><top>56</top><width>312</width><height>44</height>

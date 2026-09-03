@@ -78,6 +78,9 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.4 — icon-only transport buttons (own PNGs — TV fonts render media glyphs unreliably; ⏮/⏭ with bar =
+  prev/next, ⏪/⏩ without = rewind/ff), play/pause icon follows the player state, progress bar bright green
+  on black in a light frame (readable from the couch)
 - 0.2.3 — Play/Pause button (order Prev / Play-Pause / Next / Stop), plain-text labels (glyphs like ◀◀
   render as pause bars on some TV fonts), focused seek bar keeps the progress visible
 - 0.2.2 — play order now matches the visible list: subfolders play at their position, before the files
