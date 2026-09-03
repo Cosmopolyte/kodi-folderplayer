@@ -76,6 +76,7 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.2.1 — normal playback (OK on a title) now continues into the subfolders after the folder's files
 - 0.2.0 — play folder incl. subfolders (long-press OK on a folder, depth first, capped at 2000 titles),
   seekable progress bar (Left/Right ±10 s, OK = pause), list highlights the subfolder of the running title
 - 0.1.1 — English UI, button layout (Prev/Next/Stop + Fullscreen/Sort), fullscreen kept across titles, optional log file

@@ -274,19 +274,24 @@ class Window(xbmcgui.WindowXML):
         self.queue_folder = folder
         self.play_index(start_index)
 
-    def play_recursive(self, entry):
-        """Long press on a folder: play it including all subfolders."""
+    def build_queue(self, folder):
+        """Flat queue of a folder tree: files of the folder first, then each subfolder (depth first)."""
         xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
         try:
-            files = collect_recursive(entry.path, self.sort)
+            files = collect_recursive(folder, self.sort)
         finally:
             xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
-        log('recursive %s: %d files' % (entry.path, len(files)))
+        log('queue %s: %d files' % (folder, len(files)))
+        if len(files) >= MAX_RECURSIVE:
+            xbmcgui.Dialog().notification('Folder Player', 'Limited to %d titles' % MAX_RECURSIVE)
+        return files
+
+    def play_recursive(self, entry):
+        """Long press on a folder: play it including all subfolders."""
+        files = self.build_queue(entry.path)
         if not files:
             self.set_status('No media files in %s' % entry.name)
             return
-        if len(files) >= MAX_RECURSIVE:
-            xbmcgui.Dialog().notification('Folder Player', 'Limited to %d titles' % MAX_RECURSIVE)
         self.play_folder(entry.path, files, 0)
 
     def seek(self, delta):
@@ -408,7 +413,11 @@ class Window(xbmcgui.WindowXML):
             elif kind == 'dir':
                 self.load_folder(e.path)
             elif kind == 'file':
-                self.play_folder(self.folder, self.files, self.files.index(e))
+                # queue = this folder's files, then its subfolders (files of the current
+                # folder are the head of the flat list, so the clicked index carries over)
+                files = self.build_queue(self.folder)
+                start = next((i for i, q in enumerate(files) if q.path == e.path), 0)
+                self.play_folder(self.folder, files, start)
         elif cid == B_PREV:
             self.prev()
         elif cid == B_NEXT:
