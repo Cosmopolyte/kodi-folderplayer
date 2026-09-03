@@ -392,7 +392,8 @@ class Window(xbmcgui.WindowXML):
         self.getControl(B_SORT).setLabel('Sort: %s' % SORT_LABELS[self.mode_of(folder)])
         self.setProperty('has_custom', '1' if self.store.get_order(folder) else '')
         self.sync_highlight()
-        sel = 0
+        # entering a folder: land on the first real entry, not on '..'
+        sel = 1 if (self.has_up() and lst.size() > 1) else 0
         if select_name:
             for i in range(lst.size()):
                 if lst.getListItem(i).getLabel() == select_name:

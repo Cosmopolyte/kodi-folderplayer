@@ -96,6 +96,8 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 
 ## Changelog
 
+- 0.3.3 — opening a folder selects its first entry instead of ".." (and Play on ".." plays the current folder)
+
 - 0.3.2 — long-press OK on an entry opens an action menu (play from here / play only this / move)
 
 - 0.3.1 — play button and the play/pause media key start the highlighted folder/title while nothing plays
