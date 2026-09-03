@@ -5,7 +5,8 @@ Plain folder view, no library, no scanning, no thumbnails.
 
 - Left: entries of the current folder (subfolders, audio ♪, video ▶), current title highlighted
 - Right: the video of the running title (empty/visualisation for audio), time, progress
-- Buttons: Previous · Play/Pause · Next · Stop / Fullscreen · Sort (name / modification date)
+- Transport icons: prev · rewind · play/pause (state-aware) · forward · next · stop; sort button above the list;
+  fullscreen as a corner icon on the video
 - Remote keys: OK = open folder / play title, Back = folder up (in the start folder: exit),
   long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
   media keys (skip next/prev) work if the remote has them
@@ -77,6 +78,9 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 - Addon skins have no default textures → ship `white.png`.
 
 ## Changelog
+
+- 0.2.5 — rewind/forward buttons (Kodi speed steps 2x/4x/…, play returns to 1x), sort moved above the list,
+  fullscreen as corner icon on the video (second button row removed)
 
 - 0.2.4 — icon-only transport buttons (own PNGs — TV fonts render media glyphs unreliably; ⏮/⏭ with bar =
   prev/next, ⏪/⏩ without = rewind/ff), play/pause icon follows the player state, progress bar bright green
