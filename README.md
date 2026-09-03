@@ -11,7 +11,18 @@ Plain folder view, no library, no scanning, no thumbnails.
   long-press OK (context menu) on a folder = play it **including subfolders**, elsewhere = toggle sort,
   media keys (skip next/prev) work if the remote has them
 - The playlist is the visible list read top to bottom: subfolders are expanded at their position
-  (depth first), then the folder's files; clicking a title starts there
+  (depth first, each with its own sort mode), then the folder's files; clicking a title starts there
+- Sort mode is per folder: Name / Date / Shuffle / Custom (cycle via the sort button or long-press
+  OK outside the list). Shuffle randomizes the whole tree for playback, is never stored, and blocks
+  reordering; the visible list keeps its underlying order.
+- Custom order: long-press OK on an entry -> move mode (Up/Down move, OK saves, Back cancels).
+  The order is created on the first move, stored per folder (addon_data/folders.json) and shown as
+  "Sort: Custom" with a reset button next to it. On every visit it is reconciled with reality:
+  vanished names are dropped, new ones are appended alphabetically (a rename is a drop + append).
+  Stored data of a folder is only removed when its PARENT folder is readable and the folder is
+  really gone - an unreachable share or unplugged drive never deletes anything.
+- No sync across devices by design. The "Backup" add-on (robweber) can back up addon_data; porting
+  to another device means copying `userdata/addon_data/script.folderplayer/` over manually.
 - Progress bar is focusable (Up from the buttons): Left/Right = seek ±10 s (hold to repeat), OK = pause/resume
 - Fullscreen is kept across titles (Kodi's own fullscreen video / music window), Back returns to the add-on
 - While playing a folder tree, the list highlights the subfolder that contains the running title
@@ -76,9 +87,16 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 - `onPlayBackStopped` also fires for our own title switch → `switching` flag, otherwise auto-advance dies.
 - Returning from fullscreen fires `onInit` again → `started` guard keeps the state.
 - Addon skins have no default textures → ship `white.png`.
+- `colordiffuse="00000000"` does NOT hide a texture (renders opaque) — use an empty texture tag instead.
+- Controls with `enable` conditions are skipped by remote navigation (see 0.2.6).
+- A list reload must not steal the focus back to the list when a button (e.g. sort) had it.
+- To capture Up/Down for a move mode, park the focus on an invisible button whose onup/ondown point
+  to itself — the list container would otherwise consume the navigation.
 
 ## Changelog
 
+- 0.3.0 — per-folder sort modes incl. Shuffle and a persistent Custom order (move mode via long-press,
+  auto-reconciled, reset button), local Windows path support (C:\ start folders)
 - 0.2.6 — transport buttons no longer use enable-conditions: Kodi skips disabled controls in navigation,
   so rewind/play/forward were unreachable while nothing was playing
 
@@ -97,6 +115,6 @@ buttons 401 prev, 402 next, 405 stop, 404 fullscreen, 403 sort.
 - 0.1.1 — English UI, button layout (Prev/Next/Stop + Fullscreen/Sort), fullscreen kept across titles, optional log file
 - 0.1.0 — first version (folder browser, mixed playback, sort by name/date), tested on WZ-TV (Kodi 22 beta 1)
 
-Ideas: custom per-folder order (move titles, persisted in addon_data, sort cycle name/date/custom).
+Ideas: none open right now — generalisation pass for a public release is next.
 
 Note for developers: never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `\x89PNG\r\n`.

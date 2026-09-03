@@ -10,16 +10,31 @@
 
     <!-- header: current folder + sort (left, above the list) / playing folder (right) -->
     <control type="label">
-      <left>24</left><top>14</top><width>400</width><height>36</height>
+      <left>24</left><top>14</top><width>270</width><height>36</height>
       <label>$INFO[Control.GetLabel(301)]</label><font>font13</font><textcolor>FFFFFFFF</textcolor>
       <scroll>true</scroll>
     </control>
     <control type="label" id="301"><left>0</left><top>0</top><width>1</width><height>1</height><visible>false</visible><label></label></control>
+    <control type="button" id="411">
+      <left>302</left><top>10</top><width>124</width><height>36</height>
+      <label>✕ Custom</label><font>font12</font><align>center</align>
+      <texturenofocus colordiffuse="FF3A2A2A">white.png</texturenofocus><texturefocus colordiffuse="FF9E3F2F">white.png</texturefocus>
+      <onleft>100</onleft><onright>403</onright><onup>100</onup><ondown>100</ondown>
+      <visible>!String.IsEmpty(Window.Property(has_custom))</visible>
+    </control>
     <control type="button" id="403">
       <left>434</left><top>10</top><width>150</width><height>36</height>
       <label>Sort: Name</label><font>font12</font><align>center</align>
       <texturenofocus colordiffuse="FF1E2A38">white.png</texturenofocus><texturefocus colordiffuse="FF2F5F9E">white.png</texturefocus>
-      <onleft>100</onleft><onright>404</onright><onup>100</onup><ondown>100</ondown>
+      <onleft>411</onleft><onright>404</onright><onup>100</onup><ondown>100</ondown>
+    </control>
+    <!-- invisible grab handle over the list: holds the focus while a title is being moved -->
+    <control type="button" id="410">
+      <left>24</left><top>60</top><width>560</width><height>560</height>
+      <label></label>
+      <texturenofocus></texturenofocus>
+      <texturefocus></texturefocus>
+      <onleft>410</onleft><onright>410</onright><onup>410</onup><ondown>410</ondown>
     </control>
     <control type="label">
       <left>620</left><top>14</top><width>636</width><height>36</height>
@@ -37,6 +52,7 @@
       <scrolltime>150</scrolltime>
       <itemlayout height="40">
         <control type="image"><left>0</left><top>0</top><width>560</width><height>40</height><texture colordiffuse="2A6FB3FF">white.png</texture><visible>ListItem.IsSelected</visible></control>
+        <control type="image"><left>0</left><top>0</top><width>560</width><height>40</height><texture colordiffuse="CCE0B050">white.png</texture><visible>String.IsEqual(ListItem.Property(moving),1)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FFE0B050</textcolor><label>▲</label><visible>String.IsEqual(ListItem.Property(kind),up)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FFE0B050</textcolor><label>■</label><visible>String.IsEqual(ListItem.Property(kind),dir)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FF8FA3B7</textcolor><label>♪</label><visible>String.IsEqual(ListItem.Property(kind),audio)</visible></control>
@@ -46,6 +62,7 @@
       </itemlayout>
       <focusedlayout height="40">
         <control type="image"><left>0</left><top>0</top><width>560</width><height>40</height><texture colordiffuse="FF2F5F9E">white.png</texture></control>
+        <control type="image"><left>0</left><top>0</top><width>560</width><height>40</height><texture colordiffuse="CCE0B050">white.png</texture><visible>String.IsEqual(ListItem.Property(moving),1)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FFFFE08A</textcolor><label>▲</label><visible>String.IsEqual(ListItem.Property(kind),up)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FFFFE08A</textcolor><label>■</label><visible>String.IsEqual(ListItem.Property(kind),dir)</visible></control>
         <control type="label"><left>8</left><top>0</top><width>30</width><height>40</height><font>font12</font><aligny>center</aligny><textcolor>FFFFFFFF</textcolor><label>♪</label><visible>String.IsEqual(ListItem.Property(kind),audio)</visible></control>
@@ -104,7 +121,7 @@
     <control type="button" id="406">
       <left>614</left><top>496</top><width>648</width><height>22</height>
       <label></label>
-      <texturenofocus colordiffuse="00000000">white.png</texturenofocus>
+      <texturenofocus></texturenofocus>
       <texturefocus colordiffuse="66FFFFFF">white.png</texturefocus>
       <onleft>406</onleft><onright>406</onright><onup>404</onup><ondown>401</ondown>
     </control>
@@ -183,8 +200,15 @@
     <!-- footer hint -->
     <control type="label">
       <left>24</left><top>660</top><width>1232</width><height>30</height>
-      <label>OK = open folder / play title   ·   long press OK on a folder = play incl. subfolders, elsewhere = sort   ·   Back = folder up / exit</label>
+      <label>OK = open folder / play title   ·   long press OK on an entry = move it (custom order)   ·   Back = folder up / exit</label>
       <font>font10</font><textcolor>FF4A5A6A</textcolor>
+      <visible>String.IsEmpty(Window.Property(moving))</visible>
+    </control>
+    <control type="label">
+      <left>24</left><top>660</top><width>1232</width><height>30</height>
+      <label>MOVE:   Up / Down = move entry   ·   OK = save custom order   ·   Back = cancel</label>
+      <font>font10</font><textcolor>FFE0B050</textcolor>
+      <visible>!String.IsEmpty(Window.Property(moving))</visible>
     </control>
   </controls>
 </window>
