@@ -1,4 +1,4 @@
-# Folder Player — Kodi add-on (`script.folderplayer`)
+﻿# Folder Player — Kodi add-on (`script.folderplayer`)
 
 Play a folder of **mixed audio and video files** as one playlist.
 
