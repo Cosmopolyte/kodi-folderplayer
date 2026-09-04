@@ -1,4 +1,4 @@
-# Test environment — Kodi in a Docker container (saturn)
+﻿# Test environment — Kodi in a Docker container (saturn)
 
 Debian trixie + `kodi` (Debian package) + Xvfb + Mesa llvmpipe + PulseAudio null sink.
 No display, no GPU, no audio hardware — enough for GUI logic, window handling, player core selection.
