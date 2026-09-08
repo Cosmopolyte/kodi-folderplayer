@@ -22,6 +22,7 @@ Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 - Optional fullscreen mode for videos
 - Per-folder/playlist sort by:  Name / Date / Shuffle / Custom. Shuffle randomizes the whole tree for
   playback. Custom order: move entries by hand — auto-saved per folder
+- Plays from network shares (SMB, NFS, …) as well as local storage — any folder source Kodi can browse
 - Browse while playing: the header shows what folder is playing, the list highlights the running
   title (or the subfolder containing it)
 
