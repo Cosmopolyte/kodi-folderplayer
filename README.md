@@ -13,6 +13,8 @@ Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 <img src="docs/screenshots/move-mode.png" width="49%" alt="Move mode: reorder titles by hand"/>
 </p>
 
+<sub>Video in the screenshots: "Big Buck Bunny", © 2008 Blender Foundation / bigbuckbunny.org (CC-BY 3.0)</sub>
+
 ## Features
 
 - Left: the current folder, subfolders, audio ♪, and video ▶ files.
@@ -29,6 +31,8 @@ Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 2. Add-ons → **Install from zip file** → pick the zip from the
    [latest release](https://github.com/Cosmopolyte/kodi-folderplayer/releases/latest)
 3. Add-ons → Program add-ons → **Folder Player** — on first start it asks for your music folder
+
+<img src="docs/screenshots/kodi-home.png" width="65%" alt="Installed: Add-ons > Program add-ons > Folder Player"/>
 
 Updating: install the newer zip over the old one; settings and custom orders are kept.
 
