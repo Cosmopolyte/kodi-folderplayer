@@ -13,7 +13,7 @@ Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 <img src="docs/screenshots/move-mode.png" width="49%" alt="Move mode: reorder titles by hand"/>
 </p>
 
-<sub>Video in the screenshots: "Big Buck Bunny", © 2008 Blender Foundation / bigbuckbunny.org (CC-BY 3.0)</sub>
+<sub>Video in the screenshots: Louis Armstrong &amp; His Orchestra, 1942 "Soundie" short film (public domain, via the Prelinger Archives)</sub>
 
 ## Features
 
