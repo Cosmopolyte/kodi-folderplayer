@@ -1,30 +1,18 @@
-﻿# Folder Player — Kodi add-on (`script.folderplayer`)
+﻿# Folder Player — Kodi add-on
 
-Play a folder of **mixed audio and video files** as one playlist.
-
-Kodi's own players keep music and music videos apart: a playlist started with an audio file stays in
-the audio player, which plays a `.mp4` as sound only. Folder Player treats a folder as one queue —
-`.mp3` next to `.mp4` next to `.flac`, in the order you see — and lets Kodi pick the right player
-core per file. No library, no scanning, no thumbnails: a plain folder view.
+Play a folder of **mixed audio-files and video files** as one playlist.
+No library, no scanning, no thumbnails: a plain folder view.
 
 Built for TV remotes (Android/Google TV); mouse and touch work too. Tested on Kodi 21 (Linux,
 Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 
 ## Features
 
-- Left: the current folder (subfolders, audio ♪, video ▶), right: the video of the running title
-  (visualisation/empty for audio), time, seekable progress bar (green on black, couch-readable)
-- The playlist is the visible list read top to bottom: subfolders are expanded at their position
-  (depth first, each with its own sort mode), then the folder's files; clicking a title starts there
-- Transport icons: prev · rewind · play/pause (state-aware) · forward · next · stop;
-  fullscreen as a corner icon on the video; fullscreen is kept across titles, Back returns
-- **Per-folder sort**: Name / Date / **Shuffle** / **Custom**. Shuffle randomizes the whole tree for
-  playback (never stored, list keeps its order). Custom order: move entries by hand — created on the
-  first move, auto-saved per folder, reset button next to the sort button
-- Custom orders reconcile against reality on every visit: vanished names are dropped, new ones are
-  appended alphabetically (a rename is drop + append). Stored data of a folder is only removed when
-  its parent folder is readable and the folder is really gone — an unreachable share or unplugged
-  drive never deletes anything
+- Left: the current folder, subfolders, audio ♪, and video ▶ files.
+  Right: video of the running title (empty for audio), time, seekable progress bar, navigation/transport icons
+- Optional fullscreen mode for videos
+- Per-folder/playlist sort by:  Name / Date / Shuffle / Custom. Shuffle randomizes the whole tree for
+  playback. Custom order: move entries by hand — auto-saved per folder
 - Browse while playing: the header shows what folder is playing, the list highlights the running
   title (or the subfolder containing it)
 
@@ -103,7 +91,7 @@ buttons 401 prev, 408 rewind, 407 play/pause, 409 forward, 402 next, 405 stop, 4
   coordinates — scale by `xbmcgui.getScreenWidth()/Height()` before hit-testing.
 - `xbmcvfs.listdir` can return empty lists instead of raising on errors — never treat an empty
   listing as proof that things were deleted.
-- Never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `�PNG
+- Never run a CRLF-stripping `sed` over the whole tree — `white.png` starts with `�PNG
 `.
 - Kodi caches add-on icons by file URL (Textures db) — replacing the logo under the same filename keeps
   showing the old one in most views; rename the icon file when the artwork changes.
