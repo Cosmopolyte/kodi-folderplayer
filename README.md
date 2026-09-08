@@ -37,6 +37,9 @@ Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 
 Updating: install the newer zip over the old one; settings and custom orders are kept.
 
+Settings: start folder, default sort order, max titles per queue (raise it to play very large
+folder trees in one go — building the queue takes longer then), optional log-file folder.
+
 ## Controls
 
 | Input | Action |

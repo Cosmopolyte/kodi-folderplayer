@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.folderplayer" name="Folder Player" version="1.0.3" provider-name="vialactea">
+<addon id="script.folderplayer" name="Folder Player" version="1.1.0" provider-name="vialactea">
   <requires>
     <import addon="xbmc.python" version="3.0.0"/>
   </requires>
@@ -13,7 +13,8 @@
     <assets>
       <icon>resources/icon-fp.png</icon>
     </assets>
-    <news>1.0.3 - public home: https://github.com/Cosmopolyte/kodi-folderplayer
+    <news>1.1.0 - queue limit is now a setting (2000-50000 titles; higher = longer wait when starting big trees) - thanks to the first forum feedback
+1.0.3 - public home: https://github.com/Cosmopolyte/kodi-folderplayer
 1.0.2 - icon file renamed so Kodi's texture cache picks up the new logo
 1.0.1 - proper logo (thanks to the project owner)
 1.0.0 - first public release: first-run folder picker, add-on icon, no private defaults

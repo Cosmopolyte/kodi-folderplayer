@@ -2,5 +2,6 @@
 <settings>
   <setting id="start_folder" type="folder" source="auto" label="Start folder" default=""/>
   <setting id="sort" type="labelenum" label="Default sort order" values="name|date" default="name"/>
+  <setting id="queue_limit" type="labelenum" label="Max titles per queue (higher = longer wait when starting big folder trees)" values="2000|5000|10000|20000|50000" default="2000"/>
   <setting id="logfolder" type="folder" source="auto" label="Log file folder (optional, for troubleshooting)" default=""/>
 </settings>

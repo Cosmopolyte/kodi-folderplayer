@@ -248,6 +248,10 @@ class Window(xbmcgui.WindowXML):
         super().__init__(*a, **k)
         self.start_folder = k.get('folder')
         self.default_sort = k.get('sort') or SORT_NAME
+        try:
+            self.queue_limit = int(ADDON.getSetting('queue_limit') or MAX_RECURSIVE)
+        except ValueError:
+            self.queue_limit = MAX_RECURSIVE
         self.store = Store()
         self.shuffled = set()                     # folders whose ACTIVE mode is shuffle (transient)
         self.folder = self.start_folder           # folder shown in the list
@@ -352,8 +356,10 @@ class Window(xbmcgui.WindowXML):
                 self.store.set(folder, order=cleaned)
         return entries
 
-    def collect(self, folder, limit=MAX_RECURSIVE):
+    def collect(self, folder, limit=None):
         """Flat queue of a folder tree in list order; every folder uses its own mode."""
+        if limit is None:
+            limit = self.queue_limit
         out = []
         entries = self.read_entries(folder)
         if entries is None:
@@ -547,8 +553,9 @@ class Window(xbmcgui.WindowXML):
         finally:
             xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
         log('queue %s: %d files' % (folder, len(files)))
-        if len(files) >= MAX_RECURSIVE:
-            xbmcgui.Dialog().notification('Folder Player', 'Limited to %d titles' % MAX_RECURSIVE)
+        if len(files) >= self.queue_limit:
+            xbmcgui.Dialog().notification('Folder Player',
+                                          'Limited to %d titles (raise it in the add-on settings)' % self.queue_limit)
         return files
 
     def play_from(self, folder, clicked=None):
