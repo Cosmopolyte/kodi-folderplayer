@@ -6,6 +6,13 @@ No library, no scanning, no thumbnails: a plain folder view.
 Built for TV remotes (Android/Google TV); mouse and touch work too. Tested on Kodi 21 (Linux,
 Windows) and Kodi 22 beta (Android TV). Landscape only — like Kodi itself.
 
+![Browsing while a video plays](docs/screenshots/browsing-playing.png)
+
+<p>
+<img src="docs/screenshots/action-menu.png" width="49%" alt="Action menu on long-press"/>
+<img src="docs/screenshots/move-mode.png" width="49%" alt="Move mode: reorder titles by hand"/>
+</p>
+
 ## Features
 
 - Left: the current folder, subfolders, audio ♪, and video ▶ files.
